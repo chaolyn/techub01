@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação de Compra</title>
+  <link rel="stylesheet" href="confirmacao.css">
+</head>
+<body>
+  <!-- Navbar --> 
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="notebooks.html">Notebooks</a>
+    <a href="celulares.html">Celulares</a>
+    <a href="tablets.html">Tablets</a>
+    <a href="acessorios.html">Acessórios</a>
+    <a href="carrinho.html">Carrinho 🛒</a>
+  </nav>
+
+  <h1>Confirmação de Compra</h1>
+
+  <div class="produto-confirmacao">
+    <img id="produto-img" src="" alt="Produto">
+    <div class="info">
+      <h3 id="produto-nome"></h3>
+      <p id="produto-preco"></p>
+
+     
+      <ul class="detalhes" id="lista-especificacoes"></ul>
+
+      <div class="botoes">
+        <button id="addCarrinho">Adicionar ao Carrinho</button>
+        <button id="voltar">⬅ Voltar às Compras</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    //bgl da URL
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get("nome");
+    const preco = params.get("preco");
+    const img = params.get("img");
+
+  
+    const processador = params.get("processador");
+    const ram = params.get("ram");
+    const armazenamento = params.get("armazenamento");
+    const gpu = params.get("gpu");
+
+    const garantia = params.get("garantia");
+    const compatibilidade = params.get("compatibilidade");
+    const tipo = params.get("tipo");
+
+   
+    document.getElementById("produto-nome").textContent = nome;
+    document.getElementById("produto-preco").textContent = preco;
+    document.getElementById("produto-img").src = img;
+
+    const lista = document.getElementById("lista-especificacoes");
+
+    function addSpec(label, valor) {
+      if (valor) {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${label}:</strong> ${valor}`;
+        lista.appendChild(li);
+      }
+    }
+
+   
+    addSpec("Processador", processador);
+    addSpec("Memória RAM", ram);
+    addSpec("Armazenamento", armazenamento);
+    addSpec("Placa de vídeo", gpu);
+
+    
+    addSpec("Garantia", garantia);
+    addSpec("Compatibilidade", compatibilidade);
+    addSpec("Tipo", tipo);
+
+   
+    document.getElementById("addCarrinho").addEventListener("click", () => {
+      const produto = {
+        nome,
+        preco,
+        img,
+        processador,
+        ram,
+        armazenamento,
+        gpu,
+        garantia,
+        compatibilidade,
+        tipo
+      };
+
+      let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      carrinho.push(produto);
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+      alert("✅ Produto adicionado ao carrinho!");
+      window.location.href = "carrinho.html";
+    });
+
+   
+    document.getElementById("voltar").addEventListener("click", () => {
+      if (document.referrer) {
+        window.location.href = document.referrer;
+      } else {
+        window.location.href = "index.html"; // fallback
+      }
+    });
+  </script>
+</body>
+</html>

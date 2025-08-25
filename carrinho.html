@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho</title>
+  <link rel="stylesheet" href="carrinho.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="notebooks.html">💻 Notebooks</a>
+    <a href="celulares.html">📱 Celulares</a>
+    <a href="tablets.html">📲 Tablets</a>
+    <a href="acessorios.html">acessorios</a>
+    <a href="carrinho.html" class="ativo">🛒 Carrinho</a>
+  </nav>
+
+  <h1>🛒 Meu Carrinho</h1>
+
+  <div id="carrinho-container">
+    
+  </div>
+
+  
+  <div id="resumo-pedido">
+    <h2>📦 Resumo do Pedido</h2>
+    <p>Subtotal: <span id="subtotal">R$ 0,00</span></p>
+
+    
+    <div id="frete-cep">
+      <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="8">
+      <button onclick="calcularFrete()">🚚 Simular Frete</button>
+    </div>
+
+    <p>Frete: <span id="frete">R$ 0,00</span></p>
+    <p>Prazo estimado: <span id="prazo">-</span></p>
+    <hr>
+    <p class="total-final">Total: <span id="valor-total">R$ 0,00</span></p>
+  </div>
+
+  <div id="carrinho-acoes">
+    <button onclick="esvaziarCarrinho()" class="btn-esvaziar">🗑️ Esvaziar</button>
+    <button onclick="finalizarCompra()" class="btn-finalizar">✅ Finalizar Compra</button>
+  </div>
+
+  <script>
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    let freteAtual = 0;
+    let prazoAtual = "-";
+
+    const container = document.getElementById("carrinho-container");
+    const subtotalSpan = document.getElementById("subtotal");
+    const freteSpan = document.getElementById("frete");
+    const prazoSpan = document.getElementById("prazo");
+    const totalSpan = document.getElementById("valor-total");
+    const cepInput = document.getElementById("cep");
+
+    function atualizarCarrinho() {
+      container.innerHTML = "";
+      let subtotal = 0;
+
+      if (carrinho.length === 0) {
+        container.innerHTML = "<p>Seu carrinho está vazio 🛒</p>";
+        subtotalSpan.textContent = "R$ 0,00";
+        freteSpan.textContent = "R$ 0,00";
+        prazoSpan.textContent = "-";
+        totalSpan.textContent = "R$ 0,00";
+        return;
+      }
+
+      carrinho.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.classList.add("item");
+
+        let precoNum = parseFloat(item.preco.replace("R$", "").replace(".", "").replace(",", "."));
+        let qtd = item.qtd || 1;
+        let subtotalItem = precoNum * qtd;
+        subtotal += subtotalItem;
+
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.nome}">
+          <div class="info">
+            <h3>${item.nome}</h3>
+            <p>Preço: ${item.preco}</p>
+            <div class="qtd">
+              <button onclick="diminuirQtd(${index})">➖</button>
+              <span>${qtd}</span>
+              <button onclick="aumentarQtd(${index})">➕</button>
+            </div>
+            <p>Subtotal: R$ ${subtotalItem.toFixed(2).replace(".", ",")}</p>
+            <button class="remover" onclick="removerItem(${index})">❌ Remover</button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      subtotalSpan.textContent = "R$ " + subtotal.toFixed(2).replace(".", ",");
+      freteSpan.textContent = freteAtual === 0 ? "Grátis" : "R$ " + freteAtual.toFixed(2).replace(".", ",");
+      prazoSpan.textContent = prazoAtual;
+      totalSpan.textContent = "R$ " + (subtotal + freteAtual).toFixed(2).replace(".", ",");
+
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    }
+
+    function calcularFrete() {
+      let cep = cepInput.value.trim();
+
+      if (!cep || cep.length !== 8 || isNaN(cep)) {
+        alert("Por favor, digite um CEP válido (apenas números).");
+        return;
+      }
+
+      let subtotal = carrinho.reduce((sum, item) => {
+        let preco = parseFloat(item.preco.replace("R$", "").replace(".", "").replace(",", "."));
+        let qtd = item.qtd || 1;
+        return sum + preco * qtd;
+      }, 0);
+
+      if (subtotal >= 200) {
+        freteAtual = 0;
+        prazoAtual = "2 a 4 dias úteis";
+      } else {
+        let prefixo = parseInt(cep.substring(0, 2));
+
+        if (prefixo >= 1 && prefixo <= 39) {
+          freteAtual = 25; prazoAtual = "3 a 5 dias úteis";     
+        } else if (prefixo >= 40 && prefixo <= 59) {
+          freteAtual = 350; prazoAtual = "5 a 8 dias úteis";      // Nordeste, nordeste é mais caro 
+        } else if (prefixo >= 60 && prefixo <= 69) {
+          freteAtual = 45; prazoAtual = "7 a 12 dias úteis";   
+        } else if (prefixo >= 70 && prefixo <= 79) {
+          freteAtual = 40; prazoAtual = "5 a 9 dias úteis";      
+        } else if (prefixo >= 80 && prefixo <= 99) {
+          freteAtual = 30; prazoAtual = "3 a 6 dias úteis";    
+        } else {
+          freteAtual = 50; prazoAtual = "10 a 15 dias úteis";    
+        }
+      }
+
+      atualizarCarrinho();
+    }
+
+    function removerItem(index) {
+      carrinho.splice(index, 1);
+      atualizarCarrinho();
+    }
+
+    function aumentarQtd(index) {
+      carrinho[index].qtd = (carrinho[index].qtd || 1) + 1;
+      atualizarCarrinho();
+    }
+
+    function diminuirQtd(index) {
+      if ((carrinho[index].qtd || 1) > 1) {
+        carrinho[index].qtd -= 1;
+      } else {
+        removerItem(index);
+      }
+      atualizarCarrinho();
+    }
+
+    function esvaziarCarrinho() {
+      carrinho = [];
+      freteAtual = 0;
+      prazoAtual = "-";
+      atualizarCarrinho();
+    }
+
+    function finalizarCompra() {
+      if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+      } else {
+        alert("🎉 Compra finalizada com sucesso! Obrigado por escolher a Techub.");
+        esvaziarCarrinho();
+      }
+    }
+
+    atualizarCarrinho();
+  </script>
+</body>
+</html>

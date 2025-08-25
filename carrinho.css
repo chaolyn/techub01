@@ -1,0 +1,229 @@
+/* ---------- RESET ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ---------- BODY ---------- */
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #f5f5f5;
+  padding: 20px;
+}
+
+/* ---------- NAVBAR ---------- */
+nav {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+nav a {
+  color: #00d9ff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover,
+nav a.ativo {
+  color: #fff;
+  text-shadow: 0 0 8px #00d9ff;
+}
+
+/* ---------- HEADER ---------- */
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2.2rem;
+  color: #00d9ff;
+  text-shadow: 0 0 8px rgba(0, 217, 255, 0.6);
+}
+
+
+#carrinho-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 217, 255, 0.4);
+}
+
+.item img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 18px;
+}
+
+.item .info {
+  flex: 1;
+}
+
+.item h3 {
+  margin-bottom: 6px;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.item p {
+  color: #00d9ff;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+
+.qtd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.qtd button {
+  background: #00d9ff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.qtd button:hover {
+  background: #00aacc;
+}
+
+
+.item .remover {
+  background: #ff4d4d;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.item .remover:hover {
+  background: #e60000;
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.6);
+}
+
+
+#resumo-pedido {
+  max-width: 900px;
+  margin: 30px auto 0;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+#resumo-pedido h2 {
+  margin-bottom: 15px;
+  color: #ffd166;
+  font-size: 1.5rem;
+}
+
+#resumo-pedido p {
+  margin: 6px 0;
+  font-size: 1.1rem;
+}
+
+#resumo-pedido hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin: 12px 0;
+}
+
+.total-final {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #06d6a0;
+}
+
+
+#carrinho-acoes {
+  max-width: 900px;
+  margin: 25px auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+#carrinho-acoes button {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-esvaziar {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+.btn-esvaziar:hover {
+  background: #e60000;
+}
+
+.btn-finalizar {
+  background: #00d9ff;
+  color: #001015;
+}
+
+.btn-finalizar:hover {
+  background: #00aacc;
+}
+
+
+#frete-cep {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0 20px 0;
+}
+
+#frete-cep input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f5f5f5;
+  transition: 0.3s;
+}
+
+#frete-cep input::placeholder {
+  color: rgba(245, 245, 245, 0.6);
+}
+
+#fre

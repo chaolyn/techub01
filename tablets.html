@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablets</title>
+  <link rel="stylesheet" href="tablets.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="notebooks.html">Notebooks</a>
+    <a href="celulares.html">Celulares</a>
+    <a href="acessorios.html">acessórios</a>
+  </nav>
+
+  <h1>Tablets</h1>
+
+  <!-- Barra de pesquisa -->
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Pesquisar tablets...">
+  </div>
+
+  <!-- Samsung -->
+  <section class="marca">
+    <h2>Samsung</h2>
+    <div class="produtos">
+      <div class="produto-card">
+        <img src="Galaxy Tab S10 Ultra.png" alt="galaxy tab s10 ultra">
+        <h3>Samsung Galaxy Tab S10 Ultra</h3>
+        <p>R$ 1.999,00</p>
+        <p><strong>Processador:</strong> Snapdragon 720G</p>
+        <p><strong>RAM:</strong> 4GB</p>
+        <p><strong>Armazenamento:</strong> 64GB</p>
+        <p><strong>Tela:</strong> 10.4" TFT</p>
+        <p><strong>Câmera:</strong> 8MP</p>
+        <a href="confirmacao.html?nome=Samsung%20Galaxy%20Tab%20S10%20Ultra&preco=R$%201.999,00&img=samsung%20tab%20s6%20lite.jpg" class="btn">Comprar</a>
+      </div>
+
+      <div class="produto-card">
+        <img src="Galaxy Tab S10 FE+.webp" alt="galaxy tab s10 fe+">
+        <h3>samsung Galaxy Tab S10 FE+</h3>
+        <p>R$ 5.499,00</p>
+        <p><strong>Processador:</strong> Snapdragon 8 Gen 2</p>
+        <p><strong>RAM:</strong> 12GB</p>
+        <p><strong>Armazenamento:</strong> 256GB</p>
+        <p><strong>Tela:</strong> 11" AMOLED 120Hz</p>
+        <p><strong>Câmera:</strong> 13MP + 8MP</p>
+        <a href="confirmacao.html?nome=Samsung%20Galaxy%20Tab%20S1020%FE+&preco=R$%205.499,00&img=samsung%20tab%20s9.jpg" class="btn">Comprar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Apple -->
+  <section class="marca">
+    <h2>Apple</h2>
+    <div class="produtos">
+      <div class="produto-card">
+        <img src="iPad (2025, A16).webp" alt="iPad 9ª Geração">
+        <h3>iPad 9ª Geração</h3>
+        <p>R$ 3.499,00</p>
+        <p><strong>Processador:</strong> Apple A13 Bionic</p>
+        <p><strong>RAM:</strong> 3GB</p>
+        <p><strong>Armazenamento:</strong> 64GB</p>
+        <p><strong>Tela:</strong> 10.2" Retina</p>
+        <p><strong>Câmera:</strong> 8MP</p>
+        <a href="confirmacao.html?nome=iPad (2025, A16).webp" class="btn">Comprar</a>
+      </div>
+
+      <div class="produto-card">
+        <img src="iPad Air (2025, M3).webp" alt="iPad Pro 12.9 6ª Geração">
+        <h3>iPad Pro 12.9 6ª Geração</h3>
+        <p>R$ 11.999,00</p>
+        <p><strong>Processador:</strong> Apple M2</p>
+        <p><strong>RAM:</strong> 8GB</p>
+        <p><strong>Armazenamento:</strong> 256GB</p>
+        <p><strong>Tela:</strong> 12.9" Mini-LED</p>
+        <p><strong>Câmera:</strong> 12MP + 10MP</p>
+        <a href="confirmacao.html?nome=iPad Air (2025, M3).webp" class="btn">Comprar</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Script de pesquisa -->
+  <script>
+    const searchInput = document.getElementById("search");
+    const products = document.querySelectorAll(".produto-card");
+
+    searchInput.addEventListener("input", function () {
+      const searchValue = this.value.toLowerCase();
+      products.forEach(product => {
+        const text = product.innerText.toLowerCase();
+        product.style.display = text.includes(searchValue) ? "block" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
